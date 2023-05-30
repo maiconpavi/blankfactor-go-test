@@ -90,6 +90,23 @@ func TestEventRepositoryListOverlapPairs(t *testing.T) {
 		StartTime: time.Now().Add(-time.Minute * 30),
 		EndTime:   time.Now().Add(time.Minute * 29),
 	}
+	event4 := schema.Event{
+		Title:     "Test",
+		StartTime: time.Now(),
+		EndTime:   time.Now().Add(time.Minute * 29),
+	}
+
+	event5 := schema.Event{
+		Title:     "Test",
+		StartTime: time.Now(),
+		EndTime:   time.Now().Add(time.Hour),
+	}
+
+	event6 := schema.Event{
+		Title:     "Test",
+		StartTime: time.Now().Add(-time.Hour),
+		EndTime:   time.Now(),
+	}
 
 	repo, err := getTestRepository()
 	if err != nil {
@@ -120,6 +137,20 @@ func TestEventRepositoryListOverlapPairs(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	if _, err := repo.Insert(event4); err != nil {
+		t.Error(err)
+		return
+	}
+
+	if _, err := repo.Insert(event5); err != nil {
+		t.Error(err)
+		return
+	}
+
+	if _, err := repo.Insert(event6); err != nil {
+		t.Error(err)
+		return
+	}
 
 	events, err = repo.ListOverlapPairs()
 	if err != nil {
@@ -127,8 +158,8 @@ func TestEventRepositoryListOverlapPairs(t *testing.T) {
 		return
 	}
 
-	if len(events) != 2 {
-		t.Errorf("events is not 2 is %d", len(events))
+	if len(events) != 12 {
+		t.Errorf("events is not 12 is %d", len(events))
 		return
 	}
 }

@@ -27,8 +27,7 @@ SELECT e1.id AS id1,
 FROM EVENTS e1
 INNER JOIN EVENTS e2 ON e2.end_time >= e1.start_time
 AND e1.end_time >= e2.start_time
-AND e1.id != e2.id
-AND e1.start_time < e2.start_time
+AND e1.id < e2.id
 ```
 
 ## How to run
