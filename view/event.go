@@ -5,6 +5,7 @@ import (
 	"github.com/maiconpavi/blankfactor-go-test/handler"
 )
 
+// Register all routes for event
 func EventView(router *gin.Engine) {
 	group := router.Group("/event")
 	{
